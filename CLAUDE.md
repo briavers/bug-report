@@ -10,13 +10,13 @@ The Laravel Boost guidelines are specifically curated by Laravel maintainers for
 This application is a Laravel application and its main Laravel ecosystems package & versions are below. You are an expert with them all. Ensure you abide by these specific packages & versions.
 
 - php - 8.4
-- laravel/fortify (FORTIFY) - v1
-- laravel/framework (LARAVEL) - v13
+- laravel/framework (LARAVEL) - v11
+- laravel/mcp (MCP) - v0
+- laravel/passport (PASSPORT) - v13
 - laravel/prompts (PROMPTS) - v0
 - livewire/flux (FLUXUI_FREE) - v2
 - livewire/livewire (LIVEWIRE) - v4
 - laravel/boost (BOOST) - v2
-- laravel/mcp (MCP) - v0
 - laravel/pail (PAIL) - v1
 - laravel/pint (PINT) - v1
 - laravel/sail (SAIL) - v1
@@ -153,13 +153,37 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - If you receive an "Illuminate\Foundation\ViteException: Unable to locate file in Vite manifest" error, you can run `npm run build` or ask the user to run `npm run dev` or `composer run dev`.
 
-=== livewire/core rules ===
+=== laravel/v11 rules ===
 
-# Livewire
+# Laravel 11
 
-- Livewire allow to build dynamic, reactive interfaces in PHP without writing JavaScript.
-- You can use Alpine.js for client-side interactions instead of JavaScript frameworks.
-- Keep state server-side so the UI reflects it. Validate and authorize in actions as you would in HTTP requests.
+- CRITICAL: ALWAYS use `search-docs` tool for version-specific Laravel documentation and updated code examples.
+- Laravel 11 brought a new streamlined file structure which this project now uses.
+
+## Laravel 11 Structure
+
+- In Laravel 11, middleware are no longer registered in `app/Http/Kernel.php`.
+- Middleware are configured declaratively in `bootstrap/app.php` using `Application::configure()->withMiddleware()`.
+- `bootstrap/app.php` is the file to register middleware, exceptions, and routing files.
+- `bootstrap/providers.php` contains application specific service providers.
+- No app\Console\Kernel.php - use `bootstrap/app.php` or `routes/console.php` for console configuration.
+- Commands auto-register - files in `app/Console/Commands/` are automatically available and do not require manual registration.
+
+## Database
+
+- When modifying a column, the migration must include all of the attributes that were previously defined on the column. Otherwise, they will be dropped and lost.
+- Laravel 11 allows limiting eagerly loaded records natively, without external packages: `$query->latest()->limit(10);`.
+
+### Models
+
+- Casts can and likely should be set in a `casts()` method on a model rather than the `$casts` property. Follow existing conventions from other models.
+
+## New Artisan Commands
+
+- List Artisan commands using Boost's MCP tool, if available. New commands available in Laravel 11:
+    - `php artisan make:enum`
+    - `php artisan make:class`
+    - `php artisan make:interface`
 
 === pint/core rules ===
 
